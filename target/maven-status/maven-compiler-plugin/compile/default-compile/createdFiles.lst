@@ -1,0 +1,16 @@
+fr\universite\reservations\model\Enseignant.class
+fr\universite\reservations\service\EmailService.class
+fr\universite\reservations\service\SmtpEmailService$1.class
+fr\universite\reservations\service\GestionReservations.class
+fr\universite\reservations\service\SmtpEmailService.class
+fr\universite\reservations\ui\ReservationApp.class
+fr\universite\reservations\model\Salle.class
+fr\universite\reservations\model\StatutReservation.class
+fr\universite\reservations\Main.class
+fr\universite\reservations\service\GestionEnseignants.class
+fr\universite\reservations\service\ReservationApplicationService.class
+fr\universite\reservations\ui\ReservationApp$1.class
+fr\universite\reservations\model\Reservation.class
+fr\universite\reservations\service\GestionSalles.class
+fr\universite\reservations\service\EmailResult.class
+fr\universite\reservations\service\ReservationApplicationService$Confirmation.class

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: fr.universite.reservations.service.GestionReservationsTest
+-------------------------------------------------------------------------------
+Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.480 s -- in fr.universite.reservations.service.GestionReservationsTest
