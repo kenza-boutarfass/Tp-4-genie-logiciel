@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="layout(title, active, content)" class="app-shell">
+    <aside class="sidebar">
+        <a class="brand" th:href="@{/salles}">UNIVERSITÉ<span>Réservations</span></a>
+        <details class="mobile-menu">
+            <summary aria-label="Ouvrir le menu de navigation">
+                <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+                <span>Menu</span>
+            </summary>
+            <nav class="navigation" aria-label="Navigation principale">
+                <p class="nav-section">ADMINISTRATION</p>
+                <a th:href="@{/salles}" th:classappend="${active == 'rooms' ? ' active' : ''}">Salles</a>
+                <a th:href="@{/enseignants}" th:classappend="${active == 'teachers' ? ' active' : ''}">Enseignants</a>
+                <a th:href="@{/reservations}" th:classappend="${active == 'reservations' ? ' active' : ''}">Toutes les réservations</a>
+                <p class="nav-section">ENSEIGNANTS</p>
+                <a th:href="@{/disponibilites}" th:classappend="${active == 'availability' ? ' active' : ''}">Disponibilités</a>
+                <a th:href="@{/reservations/nouvelle}" th:classappend="${active == 'create' ? ' active' : ''}">Créer une réservation</a>
+                <a th:href="@{/mes-reservations}" th:classappend="${active == 'mine' ? ' active' : ''}">Mes réservations / historique</a>
+            </nav>
+        </details>
+        <div class="sidebar-footer">Gestion institutionnelle</div>
+    </aside>
+    <div class="main-area">
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">ESPACE DE GESTION</p>
+                <h1 th:text="${title}">Gestion des salles universitaires</h1>
+            </div>
+            <span class="desktop-tag">Application web</span>
+        </header>
+        <div class="messages">
+            <div class="notice success" th:if="${succes}" th:text="${succes}"></div>
+            <div class="notice warning" th:if="${erreur}" th:text="${erreur}"></div>
+            <div class="notice info" th:if="${info}" th:text="${info}"></div>
+        </div>
+        <main class="content" th:replace="${content}"></main>
+    </div>
+</div>
+</body>
+</html>

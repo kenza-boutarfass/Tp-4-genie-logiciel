@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Enseignants | Gestion universitaire</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<main th:replace="~{fragments/layout :: layout('Gestion des enseignants', 'teachers', ~{::content})}">
+    <section th:fragment="content" class="page">
+        <p class="page-description">Créer un enseignant et consulter le répertoire disponible.</p>
+        <section class="card">
+            <h2>Nouvel enseignant</h2>
+            <form class="form-grid" method="post" th:action="@{/enseignants/ajouter}">
+                <label>Identifiant<input name="identifiant" placeholder="Ex. ENS-003" required></label>
+                <label>Nom complet<input name="nom" placeholder="Nom et prénom" required></label>
+                <label>Adresse e-mail<input name="email" type="email" placeholder="nom@universite.fr" required></label>
+                <button class="button primary form-action" type="submit">Ajouter l'enseignant</button>
+            </form>
+        </section>
+        <section class="card">
+            <h2>Répertoire <span class="count" th:text="${enseignants.size()}">0</span></h2>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Identifiant</th><th>Nom</th><th>Adresse e-mail</th></tr></thead>
+                    <tbody>
+                    <tr th:each="enseignant : ${enseignants}">
+                        <td data-label="Identifiant" th:text="${enseignant.identifiant}"></td>
+                        <td data-label="Nom" th:text="${enseignant.nom}"></td>
+                        <td data-label="Adresse e-mail" th:text="${enseignant.email}"></td>
+                    </tr>
+                    <tr th:if="${enseignants.isEmpty()}"><td colspan="3" class="empty">Aucun enseignant enregistré.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Réservations | Gestion universitaire</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<main th:replace="~{fragments/layout :: layout('Toutes les réservations', 'reservations', ~{::content})}">
+    <section th:fragment="content" class="page">
+        <p class="page-description">Vue administration : réservations confirmées et annulées.</p>
+        <section class="card">
+            <h2>Historique <span class="count" th:text="${reservations.size()}">0</span></h2>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Salle</th><th>Enseignant</th><th>Début</th><th>Fin</th><th>Statut</th><th>Action</th></tr></thead>
+                    <tbody>
+                    <tr th:each="reservation : ${reservations}">
+                        <td data-label="Salle" th:text="${reservation.salle.nom}"></td>
+                        <td data-label="Enseignant" th:text="${reservation.enseignant.nom}"></td>
+                        <td data-label="Début" th:text="${#temporals.format(reservation.debut, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td data-label="Fin" th:text="${#temporals.format(reservation.fin, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td data-label="Statut"><span class="status"
+                            th:classappend="${reservation.statut.name() == 'CONFIRMEE' ? ' confirmed' : ' cancelled'}"
+                            th:text="${reservation.statut.name() == 'CONFIRMEE' ? 'Confirmée' : 'Annulée'}"></span></td>
+                        <td data-label="Action">
+                            <form th:if="${reservation.statut.name() == 'CONFIRMEE'}" method="post"
+                                  th:action="@{/reservations/annuler}" onsubmit="return confirm('Annuler cette réservation ?')">
+                                <input type="hidden" name="reservationId" th:value="${reservation.identifiant}">
+                                <button class="button danger" type="submit">Annuler</button>
+                            </form>
+                            <span th:unless="${reservation.statut.name() == 'CONFIRMEE'}" class="muted">—</span>
+                        </td>
+                    </tr>
+                    <tr th:if="${reservations.isEmpty()}"><td colspan="6" class="empty">Aucune réservation enregistrée.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</main>
+</body>
+</html>

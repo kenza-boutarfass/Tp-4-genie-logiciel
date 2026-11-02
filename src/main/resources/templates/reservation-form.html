@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nouvelle réservation | Gestion universitaire</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<main th:replace="~{fragments/layout :: layout('Créer une réservation', 'create', ~{::content})}">
+    <section th:fragment="content" class="page">
+        <p class="page-description">Une réservation est confirmée uniquement si la période est valide et libre.</p>
+        <section class="card form-card">
+            <h2>Détails de la réservation</h2>
+            <form class="form-grid" method="post" th:action="@{/reservations}">
+                <label>Salle
+                    <select name="salleId" required>
+                        <option value="">Choisir une salle</option>
+                        <option th:each="salle : ${salles}" th:value="${salle.identifiant}"
+                                th:text="${salle.nom + ' — ' + salle.capacite + ' places'}"></option>
+                    </select>
+                </label>
+                <label>Enseignant
+                    <select name="enseignantId" required>
+                        <option value="">Choisir un enseignant</option>
+                        <option th:each="enseignant : ${enseignants}" th:value="${enseignant.identifiant}"
+                                th:text="${enseignant.nom}"></option>
+                    </select>
+                </label>
+                <label>Date<input type="date" name="date" th:value="${date}" required></label>
+                <label>Heure de début<input type="time" name="debut" value="09:00" required></label>
+                <label>Heure de fin<input type="time" name="fin" value="10:00" required></label>
+                <button class="button primary form-action" type="submit">Confirmer la réservation</button>
+            </form>
+            <p class="helper">Un e-mail de confirmation sera envoyé si le serveur SMTP est configuré.</p>
+        </section>
+    </section>
+</main>
+</body>
+</html>

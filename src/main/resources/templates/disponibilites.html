@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Disponibilités | Gestion universitaire</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<main th:replace="~{fragments/layout :: layout('Disponibilités', 'availability', ~{::content})}">
+    <section th:fragment="content" class="page">
+        <p class="page-description">Rechercher les salles libres sur une période précise.</p>
+        <section class="card">
+            <h2>Période souhaitée</h2>
+            <form class="filter-form" method="get" th:action="@{/disponibilites}">
+                <label>Date<input type="date" name="date" th:value="${date}" required></label>
+                <label>Début<input type="time" name="debut" th:value="${debut}" required></label>
+                <label>Fin<input type="time" name="fin" th:value="${fin}" required></label>
+                <button class="button primary" type="submit">Rechercher les salles libres</button>
+            </form>
+            <p class="helper">La fin doit être postérieure au début. Les réservations annulées ne bloquent pas la salle.</p>
+        </section>
+        <section class="card" th:if="${salles != null}">
+            <h2>Résultats <span class="count" th:text="${salles.size()}">0</span></h2>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Identifiant</th><th>Salle</th><th>Capacité</th><th>Équipements</th></tr></thead>
+                    <tbody>
+                    <tr th:each="salle : ${salles}">
+                        <td data-label="Identifiant" th:text="${salle.identifiant}"></td>
+                        <td data-label="Salle" th:text="${salle.nom}"></td>
+                        <td data-label="Capacité" th:text="${salle.capacite}"></td>
+                        <td data-label="Équipements" th:text="${#strings.listJoin(salle.equipements, ', ')}"></td>
+                    </tr>
+                    <tr th:if="${salles.isEmpty()}"><td colspan="4" class="empty">Aucune salle libre pour cette période.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</main>
+</body>
+</html>
